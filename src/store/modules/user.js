@@ -1,3 +1,6 @@
+import router from '../../router/index'
+import netlifyIdentity from 'netlify-identity-widget'
+
 const state = {
   user: window.localStorage.getItem('user')
 }
@@ -24,6 +27,11 @@ const mutations = {
 const actions = {
   updateUser: ({ commit }, payload) => {
     commit('setUser', payload.currentUser)
+  },
+  logout: ({ commit }) => {
+    commit('setUser', null)
+    netlifyIdentity.logout()
+    router.push({ name: 'Login' })
   }
 }
 
