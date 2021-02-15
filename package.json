@@ -5,10 +5,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "bootstrap": "node ./functions/scripts/bootstrap-fauna-database.js"
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "faunadb": "^4.0.3",
     "netlify-identity-widget": "^1.9.1",
     "netlify-lambda": "^2.0.3",
     "vue": "^2.6.11",
