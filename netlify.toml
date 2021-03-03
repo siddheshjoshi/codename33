@@ -1,4 +1,4 @@
 [build]
   functions = "functions"
-  command = "npm run build && node \\bootstrap-fauna-database.js"
+  command = "npm run build && npm run bootstrap"
   publish = "dist/"
