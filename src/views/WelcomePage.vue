@@ -48,7 +48,7 @@ export default {
     onSave(){
       this.todoArray.push({isChecked:false,text: this.text});
       console.log(this.todoArray)
-      let baseURL = 'https://trusting-heisenberg-236a0c.netlify.app/.netlify/functions/todos-create';
+      let baseURL = '/.netlify/functions/todos-create';
       axios.post(baseURL, this.todoArray).then((response)=>{
         console.log(response);
       })
