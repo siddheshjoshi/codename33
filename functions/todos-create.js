@@ -25,7 +25,7 @@ exports.handler = (event, context, callback) => {
     data: data
   }
   /* construct the fauna query */
-  return client.query(q.Create(q.Ref('classes/todos'), todoItem))
+  return client.query(q.Create(q.Ref('classes/todos-tst'), todoItem))
     .then((response) => {
       console.log('success', response)
       /* Success! return the response with statusCode 200 */
