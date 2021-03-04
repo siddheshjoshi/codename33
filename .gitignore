@@ -25,3 +25,7 @@ pnpm-debug.log*
 # Local Netlify folder
 .netlify
 .env
+functions/process.env
+package-lock.json
+.gitignore
+package-lock.json
