@@ -37,7 +37,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import axios from "axios";
+import fetch from "node-fetch";
 
 export default {
   
@@ -46,11 +46,12 @@ export default {
       logout: 'logout'
     }),
     onSave(){
-      this.todoArray.push({isChecked:false,text: this.text});
-      console.log(this.todoArray)
-      let baseURL = '/.netlify/functions/todos-create';
-      axios.post(baseURL, this.todoArray).then((response)=>{
+      return fetch('/.netlify/functions/todos-create',{
+        body: JSON.stringify(this.todoArray),
+        method: 'POST'
+      }).then(response=>{
         console.log(response);
+        return response
       })
     }
   },
