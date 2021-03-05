@@ -34,6 +34,7 @@ export default {
       currentUser: null
     }),
     triggerNetlifyIdentityAction (action) {
+      netlifyIdentity.init()
       if (action === 'login' || action === 'signup') {
         netlifyIdentity.open(action)
         netlifyIdentity.on(action, user => {

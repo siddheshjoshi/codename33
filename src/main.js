@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import netlifyIdentity from 'netlify-identity-widget'
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 netlifyIdentity.init({
   APIUrl: '/.netlify/identity',

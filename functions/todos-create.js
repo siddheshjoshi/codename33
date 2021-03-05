@@ -10,6 +10,12 @@ const client = new faunadb.Client({
   secret: process.env.FAUNADB_SECRET
 })
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'
+};
+
 /* export our lambda function as named "handler" export */
 exports.handler = (event, context, callback) => {
   /* parse the string body into a useable JS object */
@@ -25,6 +31,7 @@ exports.handler = (event, context, callback) => {
       /* Success! return the response with statusCode 200 */
       return callback(null, {
         statusCode: 200,
+        headers,
         body: JSON.stringify(response)
       })
     }).catch((error) => {
@@ -32,6 +39,7 @@ exports.handler = (event, context, callback) => {
       /* Error! return the error with statusCode 400 */
       return callback(null, {
         statusCode: 400,
+        headers,
         body: JSON.stringify(error)
       })
     })
