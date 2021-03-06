@@ -1,12 +1,14 @@
 <template>
   <div class="about">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 ">
           <button class="btn btn-outline-primary mt-3" @click="logout">Logout</button>
         </div>
       </div>
-
+    </div>
+    <transition name="fade">
+    <div class="container">
       <div class="row justify-content-center mt-5">
         <div class="col-md-9">
           <div class="input-group">
@@ -21,24 +23,23 @@
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <div class="input-group-text">
-                <input type="checkbox" v-model="isChecked" value="item.isChecked" aria-label="Checkbox for following text input">
+                <input type="checkbox" v-model="item.isChecked" @click="onEdit(item)" value="item.isChecked" aria-label="Checkbox for following text input">
               </div>
             </div>
                 <input type="text" v-model="item.text" class="form-control" aria-label="Text input with checkbox">
-                <input type="button" class="btn btn-outline-primary ml-1" value="Save" aria-label="Save">
-                <input type="button" class="btn btn-outline-primary ml-1" value="Delete" aria-label="Delete">
-                <input type="button" class="btn btn-outline-secondary ml-3 add-btn" value="+" aria-label="Save">
+                <input type="button" class="btn btn-outline-primary ml-1" value="Edit" @click="onEdit(item)" aria-label="Edit">
+                <input type="button" class="btn btn-outline-primary ml-1" value="Delete" @click="onDelete(item)" aria-label="Delete">
           </div>
         </div>
       </div>
     </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import fetch from "node-fetch";
-
+import axios from 'axios';
 export default {
   
   methods: {
@@ -46,38 +47,88 @@ export default {
       logout: 'logout'
     }),
     onSave(){
-      return fetch('/.netlify/functions/todos-create',{
-        body: JSON.stringify(this.todoArray),
-        method: 'POST'
-      }).then(response=>{
-        console.log(response);
-        return response
+      let objRandom = {"isChecked": false, "text": this.text}
+      axios.post('/.netlify/functions/todos-create',objRandom).then(response=>{
+      }).catch(error=>{
+        console.warn(error)
+      }).finally(()=>{
+        this.todoArray = []
+        this.getAll()})
+    },
+    getAll(){
+      axios.get('/.netlify/functions/todo-read-all').then((response)=>{
+        // this.todoArray.push(response.data);
+        response.data.forEach(element => {
+          this.todoArray.push({isChecked: element.data.isChecked, text: element.data.text, id: element.ref.['@ref'].id})
+        })
+      }).catch(error=>{
+        console.warn(error)
+      }).finally(() => {
+        console.log('Read Completed..');
+      })
+    },
+    onEdit(todoItem){
+      console.warn('editing isChecked: ', todoItem.isChecked)
+      console.warn('Not is: ', !todoItem.isChecked)
+      console.table(todoItem)
+      axios.post('/.netlify/functions/todos-update', {id: todoItem.id, text: todoItem.text, isChecked: !todoItem.isChecked })
+      .then((response)=>{
+
+      })
+      .finally(()=>{
+        this.todoArray = []
+        this.getAll()
+      })
+    },
+    onDelete(todoItem){
+      axios.post('/.netlify/functions/todos-delete',{id:todoItem.id})
+      .then((response)=>{
+        console.log(response)
+      })
+      .finally(()=>{
+        this.todoArray = []
+        this.getAll()
       })
     }
   },
+  created(){
+    this.getAll();
+  },
   data : function(){
     return{
-      todoArray: [
-        {isChecked : false, text : 'todo number one'},
-        {isChecked : false, text : 'todo number two'},
-        {isChecked : false, text : 'todo number three'},
-      ],
+      todoArray: [],
       isChecked: false, 
-      text: ''
+      text: '',
+      deleteTodos: []
     }
   }
 }
 </script>
 
 <style scoped>
-  .add-btn{
-    border-radius: 100%;
-    color: white  !important;
-    background: grey;
-    position: fixed;
-    bottom: 10px;
-    right: 10px; 
-    width: 60px;
-    height: 60px;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0
+}
+
+
+.bounce-enter-active {
+  animation: bounce-in .8s;
+}
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
   }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>

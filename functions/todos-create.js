@@ -29,18 +29,18 @@ exports.handler = (event, context, callback) => {
     .then((response) => {
       console.log('success', response)
       /* Success! return the response with statusCode 200 */
-      return callback(null, {
+      return {
         statusCode: 200,
         headers,
         body: JSON.stringify(response)
-      })
+      }
     }).catch((error) => {
       console.log('error', error)
       /* Error! return the error with statusCode 400 */
-      return callback(null, {
+      return  {
         statusCode: 400,
         headers,
         body: JSON.stringify(error)
-      })
+      }
     })
 }
