@@ -1,10 +1,14 @@
 <template>
   <div>
-    <div v-if="!user">
-      <button @click="triggerNetlifyIdentityAction('login')">Log In</button>
-      <button @click="triggerNetlifyIdentityAction('signup')">Sign Up</button>
+    <div class="container">
+      <div class="row mt-5">
+      <div v-if="!user">
+        <button class="btn btn-outline-secondary mr-5 ml-5" @click="triggerNetlifyIdentityAction('login')">Log In</button>
+        <button class="btn btn-outline-secondary" @click="triggerNetlifyIdentityAction('signup')">Sign Up</button>
+      </div>
+      <button v-else @click="triggerNetlifyIdentityAction('logout')">Logout</button>
+      </div>
     </div>
-    <button v-else @click="triggerNetlifyIdentityAction('logout')">Logout</button>
   </div>
 </template>
 
@@ -49,6 +53,7 @@ export default {
           this.updateUser({
             currentUser: this.currentUser
           })
+          console.log(this.currentUser)
           netlifyIdentity.close()
           if (this.user) {
             this.$router.push({ name: 'WelcomePage' })

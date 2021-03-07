@@ -19,7 +19,7 @@ export default {
 }
 /* source: https://www.pixeltrue.com/frontliner-heroes */
 body {
-  background-image: url('./assets/Frame 1.png');
+  background-image: url('./assets/Work-at-home.png');
   background-repeat: no-repeat;
 }
 

@@ -76,13 +76,16 @@
 import { mapActions } from "vuex";
 import { PhTrash, PhUpload, PhPen, PhCheck, PhUserCircleMinus, PhFileX } from "phosphor-vue";
 import axios from "axios";
+import user from "../store/modules/user"
 export default {
   methods: {
     ...mapActions("user", {
       logout: "logout",
     }),
     onSave() {
-      let objRandom = { isChecked: false, text: this.text };
+      
+       console.log(user.state.user.username);
+      let objRandom = { isChecked: false, text: this.text, user_name: JSON.parse(user.state.user).username };
       axios
         .post("/.netlify/functions/todos-create", objRandom)
         .then((response) => {})
@@ -96,7 +99,7 @@ export default {
     },
     getAll() {
       axios
-        .get("/.netlify/functions/todo-read-all")
+        .post("/.netlify/functions/todo-read-all",{user_name: JSON.parse(user.state.user).username})
         .then((response) => {
           this.todoArray.push(response.data);
           //this.todoArray.splice(0,this.todoArray.length,...response);
@@ -159,6 +162,7 @@ export default {
     },
   },
   created() {
+    
     this.getAll();
   },
   data: function () {
@@ -188,6 +192,12 @@ export default {
 .todo-is-not-done {
   text-decoration: none;
 }
+
+body {
+  background-image: url('../assets/Frame 1.png');
+  background-repeat: no-repeat;
+}
+
 
 
 .fade-enter-active,
