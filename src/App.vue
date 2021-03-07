@@ -17,6 +17,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+/* source: https://www.pixeltrue.com/frontliner-heroes */
+body {
+  background-image: url('./assets/Frame 1.png');
+  background-repeat: no-repeat;
+}
 
 #nav {
   padding: 30px;
