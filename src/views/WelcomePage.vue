@@ -12,7 +12,7 @@
     </div>
     <transition name="fade">
       <div class="container">
-        <div class="row justify-content-center mt-5">
+        <div class="row justify-content-center mt-5 mb-5">
           <div class="col-md-9">
             <div class="input-group">
               <input
@@ -29,7 +29,7 @@
         </div>
 
         <div
-          class="row justify-content-center mt-5"
+          class="row justify-content-center mt-2"
           v-for="(item, index) in todoArray"
           :key="index"
         >
@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="row" v-if="deleteTodos.length > 1">
-          <div class="delete-bulk-button">
+          <div class="delete-bulk-button m-5">
             <p class="delete-bulk-text"> Bulk Delete</p>
             <button 
               class="btn btn-outline-primary ml-1 "  
@@ -193,11 +193,6 @@ export default {
   text-decoration: none;
 }
 
-body {
-  background-image: url('../assets/Frame 1.png');
-  background-repeat: no-repeat;
-}
-
 
 
 .fade-enter-active,
@@ -219,7 +214,6 @@ body {
 }
 
 .delete-bulk-button {
-  position: fixed;
   border-radius: 100%;
   bottom: 50px;
   right: 50px; 
@@ -228,7 +222,6 @@ body {
 }
 
 .delete-bulk-button:hover {
-  position: fixed;
   border-radius: 100%;
   height: 100px;
   width: 100px;
