@@ -1,0 +1,265 @@
+{
+    "teams":[
+        {
+            "id":"c1cd2600-0fdc-46ef-8e00-70bf7474c770",
+            "TeamName":"KOLKATA KNIGHT RIDERS",
+            "Players":
+            [
+                {
+                   "player0": "Dinesh Karthik",
+                   "player1": "Andre Russell",
+                   "player2": "Kamlesh Nagarkoti",
+                   "player3": "Kuldeep Yadav",
+                   "player4": "Lockie Ferguson",
+                   "player5": "Nitish Rana",
+                   "player6": "Prasidh Krishna",
+                   "player7": "Rinku Singh",
+                   "player8": "Sandeep Warrier",
+                   "player9": "Shivam Mavi",
+                   "player10": "Shubman Gill",
+                   "player11": "Sunil Narine",
+                   "player12": "Eoin Morgan",
+                   "player13": "Pat Cummins",
+                   "player14": "Rahul Tripathi",
+                   "player15": "Varun Chakravarthy",
+                   "player16": "Pawan Negi",
+                   "player17": "Tim Seifert",
+                   "player18": "Shakib al Hasan",
+                   "player19": "Sheldon Jackson",
+                   "player20": "Vaibhav Arora",
+                   "player21": "Karun Nair",
+                   "player22": "Harbhajan Singh",
+                   "player23": "Ben Cutting",
+                   "player24": "Venkatesh Iyer"
+                }
+             ]
+        },
+        {
+            "id":"0b7b3af6-e114-4c31-b4a1-cf091b5140f4",
+            "TeamName":"MUMBAI INDIANS",
+            "Players":
+            [
+                {
+                   "player0": "Rohit Sharma",
+                   "player1": "Aditya Tare",
+                   "player2": "Anmolpreet Singh",
+                   "player3": "Anukul Roy",
+                   "player4": "Dhawal Kulkarni",
+                   "player5": "Hardik Pandya",
+                   "player6": "Ishan Kishan",
+                   "player7": "Jasprit Bumrah",
+                   "player8": "Jayant Yadav",
+                   "player9": "Kieron Pollard",
+                   "player10": "Krunal Pandya",
+                   "player11": "Quinton de Kock",
+                   "player12": "Rahul Chahar",
+                   "player13": "Suryakumar Yadav",
+                   "player14": "Chris Lynn",
+                   "player15": "Mohsin Khan",
+                   "player16": "Saurabh Tiwary",
+                   "player17": "Trent Boult",
+                   "player18": "Adam Milne",
+                   "player19": "Nathan Coulter-Nile",
+                   "player20": "Piyush Chawla",
+                   "player21": "James Neeshan",
+                   "player22": "Yudhvir Charak",
+                   "player23": "Marco Jansen",
+                   "player24": "Arjun Tendulkar"
+                }
+             ]
+        },
+        {
+            "id":"4848907c-c8bf-41ad-900d-48af1545b82f",
+            "TeamName":"RAJASTHAN ROYALS",
+            "Players":[
+                {
+                   "player0": "Sanju Samson (C)",
+                   "player1": "Ben Stokes",
+                   "player2": "Jofra Archer",
+                   "player3": "Jos Buttler",
+                   "player4": "Mahipal Lomror",
+                   "player5": "Manan Vohra",
+                   "player6": "Mayank Markande",
+                   "player7": "Rahul Tewatia",
+                   "player8": "Riyan Parag",
+                   "player9": "Shreyas Gopal",
+                   "player10": "Jaydev Unadkat",
+                   "player11": "Yashasvi Jaiswal",
+                   "player12": "Anuj Rawat",
+                   "player13": "Kartik Tyagi",
+                   "player14": "David Miller",
+                   "player15": "Andrew Tye"
+                }
+             ]
+        },
+        {
+            "id":"c9256b73-0bc3-4304-81a1-2231009dbfc5",
+            "TeamName":"ROYAL CHALLENGERS BANGALORE",
+            "Players":
+            [
+                {
+                   "player0": "Sanju Samson",
+                   "player1": "Ben Stokes",
+                   "player2": "Jofra Archer",
+                   "player3": "Jos Buttler",
+                   "player4": "Riyan Parag",
+                   "player5": "Shreyas Gopal",
+                   "player6": "Rahul Tewatia",
+                   "player7": "Mahipal Lomror",
+                   "player8": "Kartik Tyagi",
+                   "player9": "Andrew Tye",
+                   "player10": "Jaydev Unadkat",
+                   "player11": "Mayank Markande",
+                   "player12": "Yashasvi Jaiswal",
+                   "player13": "Anuj Rawat",
+                   "player14": "David Miller",
+                   "player15": "Manan Vohra",
+                   "player16": "Shivam Dube",
+                   "player17": "Chris Morris",
+                   "player18": "Mustafizur Rahim",
+                   "player19": "Chetan Sakariya",
+                   "player20": "K.C. Cariappa",
+                   "player21": "Liam Livingstone",
+                   "player22": "Kuldip Yadav",
+                   "player23": "Akash Singh"
+                }
+             ]
+        },
+        {
+            "id":"667822b9-030f-4198-9877-03262e08ff51",
+            "TeamName":"DELHI CAPITALS",
+            "Players":
+            [
+                {
+                   "player0": "Shreyas Iyer",
+                   "player1": "Ajinkya Rahane",
+                   "player2": "Amit Mishra",
+                   "player3": "Avesh Khan",
+                   "player4": "Axar Patel",
+                   "player5": "Ishant Sharma",
+                   "player6": "Kagiso Rabada",
+                   "player7": "Prithvi Shaw",
+                   "player8": "Ravichandran Ashwin",
+                   "player9": "Rishabh Pant",
+                   "player10": "Shikhar Dhawan",
+                   "player11": "Lalit Yadav",
+                   "player12": "Marcus Stoinis",
+                   "player13": "Shimron Hetmyer",
+                   "player14": "Chris Woakes",
+                   "player15": "Anrich Nortje",
+                   "player16": "Steve Smith",
+                   "player17": "Umesh Yadav",
+                   "player18": "Ripal Patel",
+                   "player19": "Lukman Hussain Meriwala",
+                   "player20": "M Siddharth",
+                   "player21": "Tom Curran",
+                   "player22": "Sam Billings",
+                   "player23": "Pravin Dubey",
+                   "player24": "Vishnu Vinod"
+                }
+             ]
+        },
+        {
+            "id":"c69e2fe9-ddbf-431e-ac3f-f7ab295851d5",
+            "TeamName":"PUNJAB KINGS",
+            "Players":
+            [
+                {
+                   "player0": "KL Rahul (c)",
+                   "player1": "Chris Gayle",
+                   "player2": "Mayank Agarwal",
+                   "player3": "Nicholas Pooran",
+                   "player4": "Mandeep Singh",
+                   "player5": "Sarfaraz Khan",
+                   "player6": "Deepak Hooda",
+                   "player7": "Prabhsimran Singh",
+                   "player8": "Mohammed Shami",
+                   "player9": "Chris Jordan",
+                   "player10": "Darshan Nalkande",
+                   "player11": "Ravi Bishnoi",
+                   "player12": "Murugan Ashwin",
+                   "player13": "Arshdeep Singh",
+                   "player14": "Harpreet Brar",
+                   "player15": "Ishan Porel",
+                   "player16": "Dawid Malan",
+                   "player17": "Jhye Richardson",
+                   "player18": "Shahrukh Khan",
+                   "player19": "Riley Meredith",
+                   "player20": "Moises Henriques",
+                   "player21": "Jalaj Saxena",
+                   "player22": "Utkarsh Singh",
+                   "player23": "Fabian Allen",
+                   "player24": "Saurabh Kumar"
+                }
+             ]
+        },
+        {
+            "id":"3565e6c5-1af9-42ba-97f5-76f07789cb3c",
+            "TeamName":"CHENNAI SUPER KINGS",
+            "Players":
+            [
+                {
+                   "player0": "Suresh Raina",
+                   "player1": "MS Dhoni",
+                   "player2": "Narayan Jagadeesabn",
+                   "player3": "Ruturaj Gaikwad",
+                   "player4": "KM Asif",
+                   "player5": "Josh Hazlewood",
+                   "player6": "Karn Sharma",
+                   "player7": "Ambati Rayudu",
+                   "player8": "Deepak Chahar",
+                   "player9": "Faf du Plessis",
+                   "player10": "Shardul Thakur",
+                   "player11": "Mitchell Santner",
+                   "player12": "Dwayne Bravo",
+                   "player13": "Lungi Ngidi",
+                   "player14": "Sam Curran",
+                   "player15": "Ravindra Jadeja",
+                   "player16": "Imran Tahir",
+                   "player17": "Robin Uthappa",
+                   "player18": "Moeen Ali",
+                   "player19": "K Gowtham",
+                   "player20": "Cheteshwar Pujara",
+                   "player21": "M.Harisankar Reddy",
+                   "player22": "K.Bhagath Varma",
+                   "player23": "C Hari Nishaanth",
+                   "player24": "R Sai Kishore"
+                }
+             ]
+        },
+        {
+            "id":"677b8901-8d1f-47fd-beea-7ebf2c018a7a",
+            "TeamName":"SUNRISERS HYDERABAD",
+            "Players":
+            [
+                {
+                   "player0": "Kane Williamson",
+                   "player1": "David Warner",
+                   "player2": "Manish Pandey",
+                   "player3": "Virat Singh",
+                   "player4": "Priyam Garg",
+                   "player5": "Abdul Samad",
+                   "player6": "Bhuvneshwar Kumar",
+                   "player7": "Khaleel Ahmed",
+                   "player8": "Sandeep Sharma",
+                   "player9": "Siddharth Kaul",
+                   "player10": "T Natarajan",
+                   "player11": "Abhishek Sharma",
+                   "player12": "Shahbaz Nadeem",
+                   "player13": "Mitchell Marsh",
+                   "player14": "Vijay Shankar",
+                   "player15": "Mohammad Nabi",
+                   "player16": "Rashid Khan",
+                   "player17": "Jonny Bairstow",
+                   "player18": "Wriddhiman Saha",
+                   "player19": "Shreevats Goswami",
+                   "player20": "Basil Thampi",
+                   "player21": "Jason Holder",
+                   "player22": "Jagadeesha Suchith",
+                   "player23": "Kedar Yadav",
+                   "player24": "Mujeeb ur Rahman"
+                }
+             ]
+        }
+    ]
+}

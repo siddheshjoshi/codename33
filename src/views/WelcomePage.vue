@@ -14,57 +14,36 @@
       <div class="container">
         <div class="row justify-content-center mt-5 mb-5">
           <div class="col-md-9">
-            <div class="input-group">
-              <input
-                type="text"
-                v-model="text"
-                class="form-control"
-                aria-label="Text input with checkbox"
-                placeholder="What needs to be done? ʕ⁀ᴥ⁀ʔ"
-              />
-              <button class="btn btn-outline-primary ml-2 action-button" @click="onSave()" aria-label="Add"> <ph-upload :size="20"/> </button>
-              
-            </div>
+              Match#: {{matchForToday['S.No']}} <br />
+              Match: {{matchForToday['Match Center']}} <br />
+              Venue: {{matchForToday['Stadium']}}, {{matchForToday['City']}}
           </div>
-        </div>
-
-        <div
-          class="row justify-content-center mt-2"
-          v-for="(item, index) in todoArray"
-          :key="index"
-        >
-          <div class="col-md-9">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <input
-                    type="checkbox"
-                    v-model="deleteTodos"
-                    :value="item.id"
-                    aria-label="Checkbox for following text input"
-                  />
+          <div class="col-12 mt-4">
+            <div class="row">
+              <div class="col-6 prediction-box" style="min-height:90px;">
+                {{playerSubmission.team}}
+              </div>
+              <div class="col-6 pl-4">
+                <div class="row prediction-box mb-1" style="min-height:30px;">
+                  {{playerSubmission.player1}}
+                </div>
+                <div class="row prediction-box mb-1" style="min-height:30px;">
+                  {{playerSubmission.player2}}
+                </div>
+                <div class="row prediction-box mt-1" style="min-height:30px;">
+                  {{playerSubmission.player3}}
                 </div>
               </div>
-              <input
-                type="text"
-                v-model="item.text"
-                class="form-control"
-                aria-label="Text input with checkbox"
-                :class="[item.isChecked ? 'todo-is-done':'todo-is-not-done']"
-              />
-              <button class="btn btn-outline-primary ml-1 action-button" @click="onEdit(item)" aria-label="Edit"> <ph-pen :size="20"/></button>
-              <button class="btn btn-outline-primary ml-1 action-button" @click="onDelete(item)" aria-label="Delete"> <ph-trash :size="20" /> </button>
-              <button class="btn btn-outline-primary ml-1 action-button" @click="onEdit(item)" aria-label="Complete"><ph-check :size="20"/></button>
             </div>
           </div>
+
         </div>
-        <div class="row" v-if="deleteTodos.length > 1">
-          <div class="delete-bulk-button m-5">
-            <p class="delete-bulk-text"> Bulk Delete</p>
-            <button 
-              class="btn btn-outline-primary ml-1 "  
-              @click="onDeleteBulk()" 
-              aria-label="Delete-bulk"> <ph-file-x :size="48" /> </button>
+        <div class="row">
+          <div class="col-6">
+            <multiselect v-model="selected" :options="playersForTeam1" />
+          </div>
+          <div class="col-6">
+            <multiselect v-model="selected" :options="playersForTeam2" />
           </div>
         </div>
       </div>
@@ -73,115 +52,60 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { PhTrash, PhUpload, PhPen, PhCheck, PhUserCircleMinus, PhFileX } from "phosphor-vue";
-import axios from "axios";
-import user from "../store/modules/user"
+import { mapActions } from 'vuex'
+import { PhUserCircleMinus } from 'phosphor-vue'
+import axios from 'axios'
+import user from '../store/modules/user'
+
 export default {
   methods: {
-    ...mapActions("user", {
-      logout: "logout",
+    ...mapActions('user', {
+      logout: 'logout'
     }),
-    onSave() {
-      
-       console.log(user.state.user.username);
-      let objRandom = { isChecked: false, text: this.text, user_name: JSON.parse(user.state.user).username };
-      axios
-        .post("/.netlify/functions/todos-create", objRandom)
-        .then((response) => {})
-        .catch((error) => {
-          console.warn(error);
-        })
-        .finally(() => {
-          this.todoArray = [];
-          this.getAll();
-        });
+    async getMatchData () {
+      const resp = await axios.get('/.netlify/functions/get-match-schedule')
+      this.matchForToday = resp.data[0]
+      const teamsArr = (this.matchForToday['Match Center'].split('Vs'))
+      this.team1 = teamsArr[0].trim()
+      this.team2 = teamsArr[1].trim()
+      await this.setTeams()
     },
-    getAll() {
-      axios
-        .post("/.netlify/functions/todo-read-all",{user_name: JSON.parse(user.state.user).username})
-        .then((response) => {
-          this.todoArray.push(response.data);
-          //this.todoArray.splice(0,this.todoArray.length,...response);
-          this.todoArray.length = 0;
-          response.data.forEach((element) => {
-            this.todoArray.push({
-              isChecked: element.data.isChecked,
-              text: element.data.text,
-              id: element.ref["@ref"].id,
-            });
-          });
-        })
-        .catch((error) => {
-          //console.warn(error)
-        })
-        .finally(() => {
-          console.log("Read Completed..");
-        });
-    },
-    onEdit(todoItem) {
-      console.warn("editing isChecked: ", todoItem.isChecked);
-      console.warn("Not is: ", !todoItem.isChecked);
-      console.table(todoItem);
-      axios
-        .post("/.netlify/functions/todos-update", {
-          id: todoItem.id,
-          text: todoItem.text,
-          isChecked: !todoItem.isChecked,
-        })
-        .then((response) => {})
-        .finally(() => {
-          this.todoArray = [];
-          this.getAll();
-        });
-    },
-    onDelete(todoItem) {
-      axios
-        .post("/.netlify/functions/todos-delete", { id: todoItem.id })
-        .then((response) => {
-          console.log(response);
-        })
-        .finally(() => {
-          this.todoArray = [];
-          this.getAll();
-        });
-    },
-    onDeleteBulk() {
-      console.log(this.deleteTodos);
-      axios
-        .post("/.netlify/functions/todos-delete-batch", {
-          ids: this.deleteTodos,
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .finally(() => {
-          console.log("Bulk todos deleted");
-          this.getAll();
-        });
-    },
+    async setTeams () {
+      var params = { team: this.team1 }
+      const team1 = await axios.post('/.netlify/functions/get-players', { body: params })
+      params = { team: this.team2 }
+      const team2 = await axios.post('/.netlify/functions/get-players', { body: params })
+      this.playersForTeam1 = Object.values(team1.data.Players[0])
+      this.playersForTeam2 = Object.values(team2.data.Players[0])
+    }
+
   },
-  created() {
-    
-    this.getAll();
+  created () {
+    this.getMatchData()
   },
   data: function () {
     return {
-      todoArray: [],
-      isChecked: false,
-      text: "",
-      deleteTodos: [],
-    };
+      matchForToday: {},
+      team1: '',
+      team2: '',
+      isTeamOneChecked: false,
+      isTeamTwoChecked: false,
+      playerSubmission: {
+        team: 'Please tap on winning team',
+        player1: 'Player 1',
+        player2: 'Player 2',
+        player3: 'Player 3'
+      },
+      playersForTeam1: [],
+      playersForTeam2: [],
+      selected: null
+
+    }
   },
-  components:{
-    PhTrash,
-    PhUpload,
-    PhPen,
-    PhCheck,
-    PhUserCircleMinus,
-    PhFileX
+  components: {
+    PhUserCircleMinus
   }
-};
+}
 </script>
 
 <style scoped>
@@ -192,9 +116,6 @@ export default {
 .todo-is-not-done {
   text-decoration: none;
 }
-
-
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
@@ -216,7 +137,7 @@ export default {
 .delete-bulk-button {
   border-radius: 100%;
   bottom: 50px;
-  right: 50px; 
+  right: 50px;
   height: 100px;
   width: 100px;
 }
@@ -226,7 +147,7 @@ export default {
   height: 100px;
   width: 100px;
   bottom: 50px;
-  right: 50px; 
+  right: 50px;
 }
 
 .btn-outline-primary{
@@ -253,7 +174,6 @@ export default {
   backdrop-filter: blur(2px);
 }
 
-
 @keyframes bounce-in {
   0% {
     transform: scale(0);
@@ -265,4 +185,11 @@ export default {
     transform: scale(1);
   }
 }
+
+.prediction-box {
+  background-color: #f8f8f8;
+  color: #c5c5c5;
+  align-items: center;
+}
 </style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

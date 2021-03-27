@@ -5,6 +5,8 @@ import store from './store'
 import netlifyIdentity from 'netlify-identity-widget'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Multiselect from 'vue-multiselect'
+Vue.component('multiselect', Multiselect)
 
 netlifyIdentity.init({
   APIUrl: '/.netlify/identity',

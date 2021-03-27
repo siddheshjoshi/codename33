@@ -14,6 +14,7 @@
     "core-js": "^3.6.5",
     "faunadb": "^4.0.3",
     "jquery": "^3.6.0",
+    "license-key-generator": "^1.1.2",
     "netlify-identity-widget": "^1.9.1",
     "netlify-lambda": "^2.0.3",
     "node-fetch": "^2.6.1",
@@ -21,6 +22,7 @@
     "popper.js": "^1.16.1",
     "uuid": "^8.3.2",
     "vue": "^2.6.11",
+    "vue-multiselect": "^2.1.6",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
   },
