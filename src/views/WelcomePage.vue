@@ -13,11 +13,15 @@
     <transition name="fade">
       <div class="container">
         <div class="row justify-content-center mt-5 mb-5">
+          <div v-if="errorText" class="alert alert-danger col-12" role="alert">
+            {{errorText}}
+          </div>
           <div class="col-md-9">
               Match#: {{matchForToday['S.No']}} <br />
               Match: {{matchForToday['Match Center']}} <br />
               Venue: {{matchForToday['Stadium']}}, {{matchForToday['City']}}
           </div>
+
           <div class="col-12 mt-4">
             <div class="row">
               <div class="col-6 prediction-box" style="min-height:90px;">
@@ -25,25 +29,74 @@
               </div>
               <div class="col-6 pl-4">
                 <div class="row prediction-box mb-1" style="min-height:30px;">
-                  {{playerSubmission.player1}}
+                  <div v-if="playerSubmission.selectedPlayers[0] && playerSubmission.selectedPlayers[0].length > 0">
+                    {{playerSubmission.selectedPlayers[0]}}
+                  </div>
+                  <div v-else>
+                    {{playerSubmission.placeholderPlayer1}}
+                  </div>
                 </div>
                 <div class="row prediction-box mb-1" style="min-height:30px;">
-                  {{playerSubmission.player2}}
+                  <div v-if="playerSubmission.selectedPlayers[1] && playerSubmission.selectedPlayers[1].length > 0">
+                    {{playerSubmission.selectedPlayers[1]}}
+                  </div>
+                  <div v-else>
+                    {{playerSubmission.placeholderPlayer2}}
+                  </div>
                 </div>
                 <div class="row prediction-box mt-1" style="min-height:30px;">
-                  {{playerSubmission.player3}}
+                  <div v-if="playerSubmission.selectedPlayers[2] && playerSubmission.selectedPlayers[2].length > 0">
+                    {{playerSubmission.selectedPlayers[2]}}
+                  </div>
+                  <div v-else>
+                    {{playerSubmission.placeholderPlayer3}}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <multiselect v-model="selected" :options="playersForTeam1" />
+          <div class="col-12">
+            <div class="row float-right">
+              <button class="btn btn-link" @click="clearSelection()">clear all</button>
+            </div>
           </div>
-          <div class="col-6">
-            <multiselect v-model="selected" :options="playersForTeam2" />
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <div class="row mb-5">
+              <div class="col-12">
+                <multiselect v-model="selectedTeam" :options="teams" />
+              </div>
+              <div class="col-6 mt-2">
+                <button class="btn btn-outline-primary" @click="add('team')">ADD TEAM</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-12 mb-md-0 mb-4">
+            <div class="row">
+              <div class="col-10">
+                <multiselect v-model="selectedFromTeam1" :options="playersForTeam1" />
+              </div>
+              <div class="col-2 px-0 ">
+                <button class="btn btn-outline-primary" @click="add('fromTeam1')">ADD </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="row">
+              <div class="col-10">
+                <multiselect v-model="selectedFromTeam2" :options="playersForTeam2" />
+              </div>
+              <div class="col-2 px-0">
+                <button class="btn btn-outline-primary" @click="add('fromTeam2')">ADD </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -62,23 +115,47 @@ export default {
     ...mapActions('user', {
       logout: 'logout'
     }),
+    clearSelection () {
+      this.playerSubmission.selectedPlayers = []
+      this.playerSubmission.team = 'Please tap on winning team'
+    },
     async getMatchData () {
       const resp = await axios.get('/.netlify/functions/get-match-schedule')
       this.matchForToday = resp.data[0]
       const teamsArr = (this.matchForToday['Match Center'].split('Vs'))
-      this.team1 = teamsArr[0].trim()
-      this.team2 = teamsArr[1].trim()
+      this.teams.push(teamsArr[0].trim())
+      this.teams.push(teamsArr[1].trim())
       await this.setTeams()
     },
     async setTeams () {
-      var params = { team: this.team1 }
+      var params = { team: this.teams[0] }
       const team1 = await axios.post('/.netlify/functions/get-players', { body: params })
-      params = { team: this.team2 }
+      params = { team: this.teams[1] }
       const team2 = await axios.post('/.netlify/functions/get-players', { body: params })
       this.playersForTeam1 = Object.values(team1.data.Players[0])
       this.playersForTeam2 = Object.values(team2.data.Players[0])
-    }
+    },
+    setError (text) {
+      this.errorText = text
+      setTimeout(() => {
+        this.errorText = ''
+      }, 3000)
+    },
+    add (from) {
+      if (from === 'team') {
+        this.playerSubmission.team = this.selectedTeam
+      }
 
+      if (this.playerSubmission.selectedPlayers.length === 3 && from !== 'team') {
+        this.setError('Can only select 3. Please clear selection and add again')
+      } else {
+        if (from === 'fromTeam1') {
+          this.playerSubmission.selectedPlayers.push(this.selectedFromTeam1)
+        } else if (from === 'fromTeam2') {
+          this.playerSubmission.selectedPlayers.push(this.selectedFromTeam2)
+        }
+      }
+    }
   },
   created () {
     this.getMatchData()
@@ -86,19 +163,22 @@ export default {
   data: function () {
     return {
       matchForToday: {},
-      team1: '',
-      team2: '',
+      teams: [],
       isTeamOneChecked: false,
       isTeamTwoChecked: false,
       playerSubmission: {
         team: 'Please tap on winning team',
-        player1: 'Player 1',
-        player2: 'Player 2',
-        player3: 'Player 3'
+        placeholderPlayer1: 'Player 1',
+        placeholderPlayer2: 'Player 2',
+        placeholderPlayer3: 'Player 3',
+        selectedPlayers: []
       },
       playersForTeam1: [],
       playersForTeam2: [],
-      selected: null
+      selectedFromTeam1: null,
+      selectedFromTeam2: null,
+      selectedTeam: null,
+      errorText: ''
 
     }
   },
