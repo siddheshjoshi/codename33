@@ -23,12 +23,18 @@
           </div>
 
           <div class="col-12 mt-4">
-            <div class="row">
-              <div class="col-6 prediction-box" style="min-height:90px;">
+            <div class="row px-md-0 px-3">
+              <div
+              class="col-6 prediction-box"
+              style="min-height:90px;"
+              :class="cssObject.teamAdded ? 'added-team-styling':''"
+              >
                 {{playerSubmission.team}}
               </div>
               <div class="col-6 pl-4">
-                <div class="row prediction-box mb-1" style="min-height:30px;">
+                <div class="row prediction-box mb-1"
+                style="min-height:30px;"
+                :class="playerSubmission.selectedPlayers[0] && playerSubmission.selectedPlayers[0].length > 0 ? 'added-team-styling':''">
                   <div v-if="playerSubmission.selectedPlayers[0] && playerSubmission.selectedPlayers[0].length > 0">
                     {{playerSubmission.selectedPlayers[0]}}
                   </div>
@@ -36,7 +42,8 @@
                     {{playerSubmission.placeholderPlayer1}}
                   </div>
                 </div>
-                <div class="row prediction-box mb-1" style="min-height:30px;">
+                <div class="row prediction-box mb-1" style="min-height:30px;"
+                :class="playerSubmission.selectedPlayers[1] && playerSubmission.selectedPlayers[1].length > 0 ? 'added-team-styling':''">
                   <div v-if="playerSubmission.selectedPlayers[1] && playerSubmission.selectedPlayers[1].length > 0">
                     {{playerSubmission.selectedPlayers[1]}}
                   </div>
@@ -44,7 +51,8 @@
                     {{playerSubmission.placeholderPlayer2}}
                   </div>
                 </div>
-                <div class="row prediction-box mt-1" style="min-height:30px;">
+                <div class="row prediction-box mt-1" style="min-height:30px;"
+                :class="playerSubmission.selectedPlayers[2] && playerSubmission.selectedPlayers[2].length > 0 ? 'added-team-styling':''">
                   <div v-if="playerSubmission.selectedPlayers[2] && playerSubmission.selectedPlayers[2].length > 0">
                     {{playerSubmission.selectedPlayers[2]}}
                   </div>
@@ -58,6 +66,7 @@
 
           <div class="col-12">
             <div class="row float-right">
+              <button class="btn btn-link" @click="submit()">submit</button>
               <button class="btn btn-link" @click="clearSelection()">clear all</button>
             </div>
           </div>
@@ -68,7 +77,7 @@
           <div class="col-md-6 col-12">
             <div class="row mb-5">
               <div class="col-12">
-                <multiselect v-model="selectedTeam" :options="teams" />
+                <multiselect v-model="selectedTeam" :options="teams" :searchable="false" />
               </div>
               <div class="col-6 mt-2">
                 <button class="btn btn-outline-primary" @click="add('team')">ADD TEAM</button>
@@ -81,7 +90,7 @@
           <div class="col-md-6 col-12 mb-md-0 mb-4">
             <div class="row">
               <div class="col-10">
-                <multiselect v-model="selectedFromTeam1" :options="playersForTeam1" />
+                <multiselect :searchable="false" v-model="selectedFromTeam1" :options="playersForTeam1" />
               </div>
               <div class="col-2 px-0 ">
                 <button class="btn btn-outline-primary" @click="add('fromTeam1')">ADD </button>
@@ -91,7 +100,7 @@
           <div class="col-md-6 col-12">
             <div class="row">
               <div class="col-10">
-                <multiselect v-model="selectedFromTeam2" :options="playersForTeam2" />
+                <multiselect :searchable="false" v-model="selectedFromTeam2" :options="playersForTeam2" />
               </div>
               <div class="col-2 px-0">
                 <button class="btn btn-outline-primary" @click="add('fromTeam2')">ADD </button>
@@ -116,8 +125,22 @@ export default {
       logout: 'logout'
     }),
     clearSelection () {
+      this.cssObject.teamAdded = false
       this.playerSubmission.selectedPlayers = []
       this.playerSubmission.team = 'Please tap on winning team'
+      this.playerSubmission.placeholderPlayer1 = 'Player 1'
+      this.playerSubmission.placeholderPlayer2 = 'Player 2'
+      this.playerSubmission.placeholderPlayer3 = 'Player 3'
+    },
+    submit () {
+      if (!this.playerSubmission.selectedPlayers || this.playerSubmission.selectedPlayers.length < 2 || this.playerSubmission.team === 'Please tap on winning team') {
+        this.setError('Please select player nominations and winning team.')
+      } else {
+        delete this.playerSubmission.placeholderPlayer1
+        delete this.playerSubmission.placeholderPlayer2
+        delete this.playerSubmission.placeholderPlayer3
+        console.log(this.playerSubmission)
+      }
     },
     async getMatchData () {
       const resp = await axios.get('/.netlify/functions/get-match-schedule')
@@ -144,6 +167,7 @@ export default {
     add (from) {
       if (from === 'team') {
         this.playerSubmission.team = this.selectedTeam
+        this.cssObject.teamAdded = true
       }
 
       if (this.playerSubmission.selectedPlayers.length === 3 && from !== 'team') {
@@ -178,7 +202,8 @@ export default {
       selectedFromTeam1: null,
       selectedFromTeam2: null,
       selectedTeam: null,
-      errorText: ''
+      errorText: '',
+      cssObject: {}
 
     }
   },
@@ -270,6 +295,15 @@ export default {
   background-color: #f8f8f8;
   color: #c5c5c5;
   align-items: center;
+}
+
+.added-team-styling {
+    background-color: #313131;
+    color: #dbdbff;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
