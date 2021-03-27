@@ -97,7 +97,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6 col-12">
+          <div class="col-md-6 col-12 mb-4">
             <div class="row">
               <div class="col-10">
                 <multiselect :searchable="false" v-model="selectedFromTeam2" :options="playersForTeam2" />
